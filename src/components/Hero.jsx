@@ -9,10 +9,10 @@ return (
         width={180}
         height={180}
         loading="eager"
-        className="w-45 h-45 rounded-full border-4 border-aksen object-cover"
+        className="size-45 rounded-full border-4 border-aksen object-cover"
         />
         <div>
-            <h1 className="text-3xl font-bold text-utama md:text-5xl">Halo, Saya {nama} !</h1>
+            <h1 className="text-3xl font-bold text-utama md:text-5xl">Halo, saya {nama}!</h1>
             <p className="mt-3 text-lg text-gray-700">{tagline}</p>
         </div>
     </section>
