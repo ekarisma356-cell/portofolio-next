@@ -31,9 +31,8 @@ export default function Tentang() {
             <section className="mt-6 rounded-xl bg-white p-5 shadow-sm">
                 <h2 className="mb-3 text-xl font-bold text-utama">Perkenalan</h2>
                 <p className="text-sm leading-relaxed text-slate-600">
-                    Saya tinggal di Malang dan senang mencoba hal baru di dunia
-                    teknologi. Saya ingin bisa membuat website yang bermanfaat
-                    untuk sekolah dan UMKM di sekitar rumah.
+                   Saya Rismaeka Meisaro, Sekolah di SMK NEGERI  1 KOTA PASURUAN dengan jurusan 
+                   rekayasa perangkat lunak, saat ini saya berada di bangku kelas 11
                 </p>
             </section>
 
@@ -41,9 +40,9 @@ export default function Tentang() {
                 <div className="rounded-xl bg-white p-5 shadow-sm">
                     <h2 className="mb-3 text-xl font-bold text-utama">Hobi</h2>
                     <ul className="list-disc space-y-1 pl-5 text-sm leading-relaxed text-slate-600">
-                        <li>Bermain futsal</li>
-                        <li>Membaca komik</li>
-                        <li>Mendesain poster</li>
+                        <li>Bermain</li>
+                        <li>Membaca</li>
+                        <li>Berenang</li>
                     </ul>
                 </div>
 
@@ -56,7 +55,7 @@ export default function Tentang() {
                         rencanakan:
                     </p>
                     <ol className="mt-2 list-decimal space-y-1 pl-5 text-sm leading-relaxed text-slate-600">
-                        <li>Menuntaskan kelas industri UBIG sampai Semester 4</li>
+                        <li>Menuntaskan kelas industri UBIG</li>
                         <li>Magang di perusahaan teknologi</li>
                         <li>Bekerja sebagai Web Developer</li>
                     </ol>
