@@ -7,8 +7,11 @@ const kelasInput = "mt-1 w-full rounded-lg border border-gray-300 bg-white p-2";
 export default function FormKontak() {
     const [nama, setNama] = useState("");
     const [email, setEmail] = useState("");
+    const [hp, setHp] = useState("");
+    const [keperluan, setKeperluan] = useState("");
     const [pesan, setPesan] = useState("");
     const [error, setError] = useState({});
+    const [berhasil, setBerhasil] = useState(false);
 
     function kirim(e) {
         e.preventDefault();
@@ -20,11 +23,18 @@ export default function FormKontak() {
         if (!email.includes("@")) {
             errorBaru.email = "Email harus memuat tanda @, contoh nama@gmail.com.";
         }
+        if (hp.trim() === "") {
+            errorBaru.hp = "Nomor HP wajib diisi.";
+        }
+        if (keperluan === "") {
+            errorBaru.keperluan = "Keperluan wajib dipilih.";
+        }
         if (pesan.trim() === "") {
             errorBaru.pesan = "Pesan wajib diisi.";
         }
 
         setError(errorBaru);
+        setBerhasil(Object.keys(errorBaru).length === 0);
     }
 
     return (
@@ -77,9 +87,14 @@ export default function FormKontak() {
                     type="tel"
                     id="telepon"
                     name="telepon"
+                    value={hp}
+                    onChange={(e) => setHp(e.target.value)}
                     placeholder="081234567890"
                     className={kelasInput}
                 />
+                {error.hp && (
+                    <p className="mt-1 text-sm text-aksen">{error.hp}</p>
+                )}
             </div>
 
             <div>
@@ -89,16 +104,18 @@ export default function FormKontak() {
                 <select
                     id="keperluan"
                     name="keperluan"
-                    defaultValue=""
+                    value={keperluan}
+                    onChange={(e) => setKeperluan(e.target.value)}
                     className={kelasInput}
                 >
-                    <option value="" disabled>
-                        -- Pilih keperluan --
-                    </option>
-                    <option value="pertanyaan">Pertanyaan</option>
-                    <option value="kerja-sama">Kerja sama</option>
+                    <option value="">-- Pilih keperluan --</option>
+                    <option value="bertanya">Bertanya</option>
+                    <option value="kerja-sama">Kerja sama proyek</option>
                     <option value="lainnya">Lainnya</option>
                 </select>
+                {error.keperluan && (
+                    <p className="mt-1 text-sm text-aksen">{error.keperluan}</p>
+                )}
             </div>
 
             <div>
@@ -125,6 +142,11 @@ export default function FormKontak() {
             >
                 Kirim Pesan
             </button>
+            {berhasil && (
+                <p className="rounded-lg bg-green-100 p-3 text-green-800 dark:bg-green-900 dark:text-green-100">
+                    Terima kasih, {nama}! Pesanmu sudah lolos pemeriksaan.
+                </p>
+            )}
             <p className="text-xs text-gray-600">
                 Form ini belum mengirim pesan. Fitur pengiriman akan diaktifkan nanti.
             </p>
