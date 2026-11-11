@@ -1,13 +1,21 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function TombolTema() {
     const [gelap, setGelap] = useState(false);
 
+    useEffect(() => {
+        if (localStorage.getItem("tema") === "gelap") {
+            document.documentElement.classList.add("dark");
+            setGelap(true);
+        }
+    }, []);
+
     function gantiTema() {
-        document.documentElement.classList.toggle("dark");
-        setGelap(!gelap);
+        const temaGelap = document.documentElement.classList.toggle("dark");
+        localStorage.setItem("tema", temaGelap ? "gelap" : "terang");
+        setGelap(temaGelap);
     }
     return (
         <button 
