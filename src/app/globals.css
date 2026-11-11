@@ -1,7 +1,43 @@
 @import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
+
+html {
+  scrollbar-gutter: stable;
+}
 
 @theme {
   --color-utama: #1D3557;
   --color-aksen: #C1121F;
   --color-latar: #F1FAEE;
+}
+
+html.dark body {
+  background-color: #0f172a;
+  color: #e2e8f0;
+}
+
+html.dark .bg-white {
+  background-color: #1e293b;
+}
+
+html.dark .text-utama {
+  color: #bfdbfe;
+}
+
+html.dark .text-gray-700,
+html.dark .text-gray-600,
+html.dark .text-slate-600 {
+  color: #cbd5e1;
+}
+
+html.dark .border-gray-200,
+html.dark .border-gray-300 {
+  border-color: #475569;
+}
+
+html.dark input,
+html.dark textarea {
+  border-color: #475569;
+  background-color: #0f172a;
+  color: #e2e8f0;
 }
