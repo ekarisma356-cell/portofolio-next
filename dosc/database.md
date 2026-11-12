@@ -1,7 +1,7 @@
 # Struktur Database Portofolio
 
 Database disimpan di Supabase, project `portofolio-risma` (region Southeast Asia, Singapore).
-Alamat project dan publishable key disimpan di `.env.local`, yang tidak ikut di-commit karena tercantum di `gitignore` (`.env*`).
+Alamat project dan publishable key disimpan di `.env.local` sebagai `NEXT_PUBLIC_SUPABASE_URL` dan `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`. Untuk website yang di-deploy ke Vercel, kedua variabel ini juga harus ditambahkan di pengaturan Environment Variables untuk Production, lalu deploy ulang. File `.env.local` tidak ikut di-commit karena tercantum di `gitignore` (`.env*`).
 
 ## Tabel `projects`
 
