@@ -13,7 +13,7 @@ export const proyek = [
     ],
   },
   {
-    slug: "formm-kontak",
+    slug: "form-kontak",
     judul: "Form kontak",
     kategori: "HTML",
     minggu: "Minggu 02",
