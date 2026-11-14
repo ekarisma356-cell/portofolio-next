@@ -1,58 +1,84 @@
 import Image from "next/image";
 import Link from "next/link";
-import { proyek } from "@/data/proyek";
 import { notFound } from "next/navigation";
+import { Badge } from "@/components/ui/badge";
+import { Separator } from "@/components/ui/separator";
+import { supabase } from "@/lib/supabase";
 
+async function ambilProyek(slug) {
+    const { data, error } = await supabase
+        .from("projects")
+        .select("*")
+        .eq("slug", slug)
+        .maybeSingle();
 
-export async function generateMetadata({ params }) {
-  const { slug } = await params;
-  const item = proyek.find((p) => p.slug === slug);
+    if (error) {
+        console.error("Gagal mengambil detail proyek dari Supabase:", {
+            code: error.code,
+            message: error.message,
+            details: error.details,
+            hint: error.hint,
+        });
+        throw new Error("Gagal mengambil detail proyek dari Supabase.");
+    }
 
-  if (!item) {
-    return { title: "Proyek tidak ditemukan" };
-  }
-
-  return { title: item.judul, description: item.deskripsi };
+    return data;
 }
 
-export default async function Page({ params }) {
-  const { slug } = await params;
-  const item = proyek.find((p) => p.slug === slug);
+export async function generateMetadata({ params }) {
+    const { slug } = await params;
+    const item = await ambilProyek(slug);
 
-  if (!item) {
-    notFound();
-  }
+    if (!item) {
+        return { title: "Proyek tidak ditemukan" };
+    }
 
-  return (
-<main className="mx-auto max-w-3xl px-4 py-10">
+    return { title: item.judul, description: item.deskripsi };
+}
 
-<Link href="/proyek" className="text-sm font-semibold text-aksen hover:underline">
-&larr; Kembali ke daftar proyek
-</Link>
-<h1 className="mt-4 text-3xl font-bold text-utama
-md:text-4xl">{item.judul}</h1>
-<p className="mt-2 text-gray-600">
-{item.kategori} &middot; Dibuat di {item.minggu}
-</p>
-<Image
-src={item.gambar}
-alt={`Tangkapan layar ${item.judul}`}
-width={640}
-height={420}
-loading="eager"
+export default async function DetailProyek({ params }) {
+    const { slug } = await params;
+    const item = await ambilProyek(slug);
 
-className="mt-6 h-auto w-full rounded-xl border border-
-gray-200"
+    if (!item) {
+        notFound();
+    }
 
-/>
-<p className="mt-6 text-lg">{item.deskripsi}</p>
-<h2 className="mt-8 text-2xl font-bold text-utama">Yang Saya
-Pelajari</h2>
-<ul className="mt-3 list-disc pl-5">
-{item.fitur.map((f) => (
-<li key={f}>{f}</li>
-))}
-</ul>
-</main>
-);
+    return (
+        <main className="mx-auto max-w-3xl px-4 py-10">
+            <Link
+                href="/proyek"
+                className="text-sm font-semibold text-aksen hover:underline"
+            >
+                &larr; Kembali ke daftar proyek
+            </Link>
+            <h1 className="mt-4 text-3xl font-bold text-primary md:text-4xl">
+                {item.judul}
+            </h1>
+            <div className="mt-3 flex items-center gap-3">
+                <Badge>{item.kategori}</Badge>
+                <span className="text-muted-foreground">
+                    Dibuat di {item.minggu}
+                </span>
+            </div>
+            <Image
+                src={item.gambar_url}
+                alt={`Tangkapan layar ${item.judul}`}
+                width={640}
+                height={420}
+                loading="eager"
+                className="mt-6 h-auto w-full rounded-xl border border-border"
+            />
+            <p className="mt-6 text-lg">{item.deskripsi}</p>
+            <Separator className="my-8" />
+            <h2 className="text-2xl font-bold text-primary">
+                Yang Saya Pelajari
+            </h2>
+            <ul className="mt-3 list-disc pl-5">
+                {(item.fitur ?? []).map((fitur) => (
+                    <li key={fitur}>{fitur}</li>
+                ))}
+            </ul>
+        </main>
+    );
 }

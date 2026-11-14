@@ -2,7 +2,8 @@ import Link from "next/link"
 import Hero from "@/components/Hero"
 import ProyekCard from "@/components/ProyekCard"
 import SkillCard from "@/components/SkillCard"
-import { proyek } from "@/data/proyek"
+import { supabase } from "@/lib/supabase"
+import { buttonVariants } from "@/components/ui/button"
 import { createClient } from "@supabase/supabase-js"
 
 export const dynamic = "force-dynamic"
@@ -15,9 +16,13 @@ const skillsLokal = [
   { nama: "JavaScript", level: "Dasar" },
 ];
 
-const proyekTerbaru = proyek.slice(-3).reverse();
-
 export default async function Home() {
+  const { data: proyekTerbaru } = await supabase
+    .from("projects")
+    .select("*")
+    .order("created_at", { ascending: false })
+    .limit(3)
+  
   let skills = skillsLokal
   let skillsError = ""
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
@@ -31,7 +36,12 @@ export default async function Home() {
       .order("id", { ascending: true })
 
     if (error) {
-      console.error("Gagal mengambil data skills dari Supabase:", error)
+      console.error("Gagal mengambil data skills dari Supabase:", {
+        code: error.code,
+        message: error.message,
+        details: error.details,
+        hint: error.hint,
+      })
       skillsError = "Data keahlian dari Supabase belum dapat dimuat. Data contoh ditampilkan."
     } else {
       skills = data ?? []
@@ -70,14 +80,13 @@ export default async function Home() {
           Proyek Terbaru
         </h2>
         <div className="grid gap-4 md:grid-cols-3">
-          {proyekTerbaru.map((item) => (
+          {proyekTerbaru && proyekTerbaru.map((item) => (
             <ProyekCard key={item.slug} proyek={item} />
           ))}
         </div>
         <Link
           href="/proyek"
-          className="mt-6 inline-block rounded-lg bg-utama px-5 py-2 font-semibold text-white hover:opacity-90"
-        >
+          className={buttonVariants({ size: "lg", className: "mt-6" })}>
           Lihat Semua Proyek
         </Link>
       </section>
