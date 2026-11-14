@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { Button } from "@/components/ui/button";
 
 const kelasInput = "mt-1 w-full rounded-lg border border-gray-300 bg-white p-2";
 
@@ -136,12 +137,9 @@ export default function FormKontak() {
                 )}
             </div>
 
-            <button
-                type="submit"
-                className="rounded-lg bg-aksen px-4 py-2 text-sm font-semibold text-white hover:opacity-90"
-            >
+            <Button type="submit" size="lg">
                 Kirim Pesan
-            </button>
+            </Button>
             {berhasil && (
                 <p className="rounded-lg bg-green-100 p-3 text-green-800 dark:bg-green-900 dark:text-green-100">
                     Terima kasih, {nama}! Pesanmu sudah lolos pemeriksaan.

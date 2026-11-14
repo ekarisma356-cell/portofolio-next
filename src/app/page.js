@@ -18,37 +18,14 @@ const skillsLokal = [
 
 export default async function Home() {
   const { data: proyekTerbaru } = await supabase
+    .from("Skills")
+    .select("*")
+    .order("id");
+    const { data: skills } = await supabase
     .from("projects")
     .select("*")
     .order("created_at", { ascending: false })
-    .limit(3)
-  
-  let skills = skillsLokal
-  let skillsError = ""
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
-  const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY
-
-  if (supabaseUrl && supabaseKey) {
-    const supabase = createClient(supabaseUrl, supabaseKey)
-    const { data, error } = await supabase
-      .from("skills")
-      .select("nama, level")
-      .order("id", { ascending: true })
-
-    if (error) {
-      console.error("Gagal mengambil data skills dari Supabase:", {
-        code: error.code,
-        message: error.message,
-        details: error.details,
-        hint: error.hint,
-      })
-      skillsError = "Data keahlian dari Supabase belum dapat dimuat. Data contoh ditampilkan."
-    } else {
-      skills = data ?? []
-    }
-  } else {
-    skillsError = "Supabase belum dikonfigurasi. Data contoh keahlian ditampilkan."
-  }
+    .limit(3);
 
   return (
     <main className="mx-auto w-full max-w-5xl px-4 py-10">

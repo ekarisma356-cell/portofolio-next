@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+import { Button } from "@/components/ui/button";
 
 export default function TombolTema() {
     useEffect(() => {
@@ -14,13 +15,14 @@ export default function TombolTema() {
     }
 
     return (
-        <button
+        <Button
             type="button"
+            variant="outline"
             onClick={gantiTema}
-            className="rounded-lg border border-white px-3 py-1 text-sm font-semibold text-white hover:border-aksen hover:bg-aksen"
+            className="border-white bg-transparent text-white hover:bg-aksen hover:text-white"
         >
             <span className="dark:hidden">Mode Gelap</span>
             <span className="hidden dark:inline">Mode Terang</span>
-        </button>
+        </Button>
     );
 }
