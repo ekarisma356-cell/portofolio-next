@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/badge";
+import { Badge } from "@/components/ui/badge";
 import { Card, CardHeader, CardTitle } from "@/components/ui/card";
 
 export default function SkillCard ({ nama, level}) {

@@ -4,7 +4,6 @@ import ProyekCard from "@/components/ProyekCard"
 import SkillCard from "@/components/SkillCard"
 import { supabase } from "@/lib/supabase"
 import { buttonVariants } from "@/components/ui/button"
-import { createClient } from "@supabase/supabase-js"
 
 export const dynamic = "force-dynamic"
 
@@ -17,15 +16,39 @@ const skillsLokal = [
 ];
 
 export default async function Home() {
-  const { data: proyekTerbaru } = await supabase
-    .from("Skills")
-    .select("*")
-    .order("id");
-    const { data: skills } = await supabase
+  const { data: proyekTerbaru, error: proyekError } = await supabase
     .from("projects")
     .select("*")
     .order("created_at", { ascending: false })
-    .limit(3);
+    .limit(3)
+
+  const { data: skillsData, error: skillsQueryError } = await supabase
+    .from("skills")
+    .select("nama, level")
+    .order("id", { ascending: true })
+
+  const skills = skillsData ?? skillsLokal
+  const skillsError = skillsQueryError
+    ? "Data keahlian dari Supabase belum dapat dimuat. Data contoh ditampilkan."
+    : ""
+
+  if (proyekError) {
+    console.error("Gagal mengambil proyek terbaru dari Supabase:", {
+      code: proyekError.code,
+      message: proyekError.message,
+      details: proyekError.details,
+      hint: proyekError.hint,
+    })
+  }
+
+  if (skillsQueryError) {
+    console.error("Gagal mengambil data skills dari Supabase:", {
+      code: skillsQueryError.code,
+      message: skillsQueryError.message,
+      details: skillsQueryError.details,
+      hint: skillsQueryError.hint,
+    })
+  }
 
   return (
     <main className="mx-auto w-full max-w-5xl px-4 py-10">
