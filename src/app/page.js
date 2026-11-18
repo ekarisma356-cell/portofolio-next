@@ -5,7 +5,7 @@ import SkillCard from "@/components/SkillCard"
 import { supabase } from "@/lib/supabase"
 import { buttonVariants } from "@/components/ui/button"
 
-export const dynamic = "force-dynamic"
+export const revalidate = 60
 
 const skillsLokal = [
   { nama: "HTML", level: "Menengah" },

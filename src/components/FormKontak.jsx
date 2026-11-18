@@ -146,7 +146,7 @@ export default function FormKontak() {
                 </p>
             )}
             <p className="text-xs text-gray-600">
-                Form ini belum mengirim pesan. Fitur pengiriman akan diaktifkan nanti.
+                Form ini belum mengirim pesan. Untuk menyapa saya, tulis pesan di halaman Buku Tamu.
             </p>
         </form>
     );
